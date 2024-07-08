@@ -1,5 +1,5 @@
 {
-  "name": "@sommer/hice",
+  "name": "sommer-hice",
   "version": "1.0.0",
   "description": "Utility classes in javascript developments",
   "main": "bin/index.js",
