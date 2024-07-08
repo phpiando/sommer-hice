@@ -24,11 +24,11 @@ The SommerHice Library is a comprehensive set of utility classes aimed at enhanc
 You can install the library using npm:
 
 ```sh
-npm install js-utility-library
+npm install @sommer/hice
 ```
 
 or you can use the command yarn
 
 ```sh
-yarn add js-utility-library
+yarn add @sommer/hice
 ```

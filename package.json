@@ -21,6 +21,14 @@
   ],
   "author": "Roni Sommerfeld <roni@4tech.mobi>",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phpiando/sommer-hice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phpiando/sommer-hice/issues"
+  },
+  "homepage": "https://github.com/phpiando/sommer-hice#readme",
   "devDependencies": {
     "@babel/cli": "^7.22.10",
     "@babel/core": "^7.22.10",
