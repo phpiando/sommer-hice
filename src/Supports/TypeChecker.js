@@ -14,7 +14,7 @@ export default class TypeChecker {
    * @returns {boolean}
    */
   static isUndefined(value) {
-    return value === undefined;
+    return value === undefined || value === 'undefined';
   }
 
   /**
@@ -36,7 +36,7 @@ export default class TypeChecker {
    * @returns {boolean}
    */
   static isNull(value) {
-    return value === null;
+    return value === null || value === 'null';
   }
 
   /**

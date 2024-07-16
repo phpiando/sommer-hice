@@ -17,4 +17,4 @@ Object.defineProperty(exports, "Exception", {
 });
 var _Collection = _interopRequireDefault(require("./Collections/Collection"));
 var _Exception = _interopRequireDefault(require("./Exceptions/Exception"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }

@@ -5,10 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.http = void 0;
 var _HTTPRequest = _interopRequireDefault(require("./HTTPRequest"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 /**
  * Allows you to use HTTPRequest in a
  * Singleton to carry out requests
  */
-var http = new _HTTPRequest["default"]();
-exports.http = http;
+var http = exports.http = new _HTTPRequest["default"]();

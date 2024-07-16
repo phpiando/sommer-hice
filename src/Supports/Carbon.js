@@ -10,10 +10,19 @@ import Str from "./Str.js";
 export default class Carbon {
   /**
    * Default date format
-   * @since 1.0.0
+   * @since 1.0.1
    * @type {String}
+   * @static
    */
   static FORMAT_DEFAULT = 'YYYY-MM-DD HH:mm:ss';
+
+  /**
+   * Ignore timezone
+   * @since 1.1.0
+   * @type {Boolean}
+   * @static
+   */
+  static IGNORE_TIMEZONE = true;
 
   /**
    * Format defined by user
@@ -50,12 +59,23 @@ export default class Carbon {
   ];
 
   /**
+   * Options
+   * @since 1.1.0
+   * @type {Object}
+   * @private
+   */
+  _options = {
+    ignore_timezone: Carbon.IGNORE_TIMEZONE
+  }
+
+  /**
    * @constructor
    * @param {String|Date} date
    */
-  constructor(date, format = Carbon.FORMAT_DEFAULT) {
+  constructor(date, format = Carbon.FORMAT_DEFAULT, options = {}) {
     this.setDate(date);
     this.setFormatDefault(format);
+    this.setOptions(options);
   }
 
   /**
@@ -315,6 +335,11 @@ export default class Carbon {
    * @returns {Carbon}
    */
   _parseDate(date) {
+    // Handle ISO 8601 date strings ending with 'Z' (UTC)
+    if (typeof date === 'string' && date.endsWith('Z') && this._options['ignore_timezone']) {
+      date = date.replace('Z', '');
+    }
+
     if(date instanceof Date){
       return date;
     }
@@ -398,6 +423,17 @@ export default class Carbon {
     }
 
     this._date = this._parseDate(date);
+  }
+
+  /**
+   * Set Options
+   * @public
+   * @since 1.1.0
+   * @param {Object} options
+   * @returns {void}
+   */
+  setOptions(options) {
+    this._options = { ...this._options, ...options };
   }
 
   /**

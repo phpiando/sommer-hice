@@ -1,7 +1,7 @@
 "use strict";
 
-import TypeChecker              from "../../Supports/TypeChecker";
 import RuleRequiredIfException  from "../Exceptions/RuleRequiredIfException";
+import TypeChecker              from "../../Supports/TypeChecker";
 
 export default class RuleRequiredIf{
   /**
@@ -37,7 +37,7 @@ export default class RuleRequiredIf{
       return true;
     }
 
-    if(data_object[parameters.attribute] === parameters.value && !value){
+    if(data_object[parameters.attribute] == parameters.value && !value){
       throw new RuleRequiredIfException(parameters.attribute, RuleRequiredIfException.RULE_REQUIRED_IF);
     }
 
