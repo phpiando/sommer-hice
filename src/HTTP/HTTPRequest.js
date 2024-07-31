@@ -1,11 +1,11 @@
 "use strict";
 
-import HTTPRequestException   from './Exceptions/HTTPRequestException.js';
-import HTTPRequestCollection  from './Collections/HTTPRequestCollection.js';
-import HTTPResponse           from './Entities/HTTPResponse.js';
-import HTTPMappingResponse    from './HTTPMappingResponse.js';
 import FormDataSerializer     from '../Supports/FormDataSerializer.js';
 import HTTPConstants          from './HTTPConstants.js';
+import HTTPMappingResponse    from './HTTPMappingResponse.js';
+import HTTPRequestCollection  from './Collections/HTTPRequestCollection.js';
+import HTTPRequestException   from './Exceptions/HTTPRequestException.js';
+import HTTPResponse           from './Entities/HTTPResponse.js';
 
 /**
  * @description Class responsible for making requests
@@ -181,17 +181,18 @@ export default class HTTPRequest {
    * @returns {Promise.<HTTPResponse>}
    */
   async request(endpoint, data = {}, options = {}) {
-    this._handleOptionsRequest(options);
-
-    if (this.requests.has(options.request_id)) {
-      return await this.requests.awaitRequest(options.request_id, options.timeout);
-    }
-
-    const url_request = this._createURLRequest(endpoint);
-
-    this._handleBodyRequest(url_request, data, options);
-
     try {
+      this._handleOptionsRequest(options);
+
+      let response_request = await this._existsRequest(options);
+      if (response_request) {
+        return response_request;
+      }
+
+      const url_request = this._createURLRequest(endpoint);
+
+      this._handleBodyRequest(url_request, data, options);
+
       const response_item = this.requests.setCurrentRequest(options.request_id);
       // const request_fetch = await fetch(url_request, options);
       const request_fetch = await this._fetch(url_request, options);
@@ -207,6 +208,29 @@ export default class HTTPRequest {
     } finally {
       this.requests.unsetCurrentRequest(options.request_id);
     }
+  }
+
+  /**
+   * Check if request exists a request with the same id
+   * and return the response
+   *
+   * @private
+   * @since 1.1.2
+   * @param {Object} options
+   * @returns {HTTPResponse|null}
+   */
+  async _existsRequest(options){
+    if (!this.requests.has(options.request_id)) {
+      return null;
+    }
+
+    const response = await this.requests.awaitRequest(options.request_id, options.timeout);
+
+    if(!response){
+      return null;
+    }
+
+    return response;
   }
 
   /**

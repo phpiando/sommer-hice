@@ -50,6 +50,7 @@ export default class CollectionIndexed extends Collection {
    * Add an item to the collection or
    * update if it already exists
    *
+   * @override
    * @public
    * @since 1.0.0
    * @param {Object} item
@@ -57,20 +58,18 @@ export default class CollectionIndexed extends Collection {
    * @returns {Boolean}
    */
   add(item, at_beginning = false) {
-    if(!item[this._index_id]){
+    if (!item[this._index_id]) {
       return false;
     }
 
-    if(this.indexes[item[this._index_id]]){
-      return this.update(item, at_beginning);
-    }
-
-    return this.set(item, at_beginning);
+    const id = item[this._index_id];
+    return super.add(id, item, at_beginning);
   }
 
   /**
    * Update an item in the collection
    *
+   * @override
    * @public
    * @since 1.0.0
    * @param {Object} item
@@ -78,12 +77,55 @@ export default class CollectionIndexed extends Collection {
    * @returns {Boolean}
    */
   update(item, at_beginning = false) {
-    if (!this.indexes[item[this._index_id]]) {
+    if (!item[this._index_id]) {
       return false;
     }
 
-    super.delete(item[this._index_id]);
-    return this.set(item, at_beginning);
+    const id = item[this._index_id];
+    return super.update(id, item, at_beginning);
+  }
+
+  /**
+   * Toogle item in the collection
+   *
+   * @override
+   * @since 1.2.0
+   * @param {String|Number} key
+   * @param {*} value
+   * @param {Boolean} at_beginning
+   * @returns {Boolean}
+   */
+  toogle(item, at_beginning = false) {
+    if (!item[this._index_id]) {
+      return false;
+    }
+
+    const id = item[this._index_id];
+    return super.toogle(id, item, at_beginning);
+  }
+
+  /**
+   * Join items from the collection based on a key and separator
+   *
+   * @public
+   * @since 1.2.0
+   * @param {String|Number} index_key
+   * @returns {Object}
+   */
+  join(index_key = this._index_id, separator = ',') {
+    return this.items.map(item => item[index_key]).join(separator);
+  }
+
+  /**
+   * Get the sum of all items in the collection
+   *
+   * @public
+   * @since 1.2.0
+   * @param {String|Number} index_key
+   * @returns {Number}
+   */
+  sum(index_key = this._index_id) {
+    return this.items.reduce((sum, item) => sum + parseFloat(item[index_key]), 0);
   }
 
   /**
@@ -132,6 +174,37 @@ export default class CollectionIndexed extends Collection {
     const collection = new CollectionIndexed(this._index_id);
     collection.setFromArray(items);
     return collection;
+  }
+
+  /**
+   * Group by items from the collection based on a key
+   *
+   * @public
+   * @since 1.2.0
+   * @param {String|number} index_key
+   * @returns {Object|Array}
+   */
+  groupBy(index_key = this._index_id){
+    return this.items.reduce((accumulator, item) => {
+      const key = item[index_key];
+      if (!accumulator[key]) {
+        accumulator[key] = [];
+      }
+
+      accumulator[key].push(item);
+      return accumulator;
+    }, {});
+  }
+
+  /**
+   * Count items from the collection based on a key
+   *
+   * @public
+   * @since 1.2.0
+   * @returns {Number}
+   */
+  count(){
+    return this.items.reduce((accumulator, item) => accumulator + 1, 0);
   }
 
   /**

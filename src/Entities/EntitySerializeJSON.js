@@ -47,6 +47,7 @@ export default class EntitySerializeJSON {
     'Entity': (attribute, instance) => (new EntitySerializeJSON(instance[attribute], this._options)).serialize(),
     'CollectionIndexed': (attribute, instance) => this.serializeCollection(attribute, instance),
     'Array': (attribute, instance) => this.serializeArray(attribute, instance),
+    'Object': (attribute, instance) => this.serializeObject(attribute, instance),
   }
 
   /**
@@ -144,6 +145,29 @@ export default class EntitySerializeJSON {
   }
 
   /**
+   * Serialize objects in JSON format
+   *
+   * @public
+   * @since 1.2.0
+   * @param {*} attribute
+   * @param {*} instance
+   * @returns
+   */
+  serializeObject(attribute, instance) {
+    this._log('*** Object:', {
+      attribute : attribute,
+      instance  : instance,
+      is_empty: TypeChecker.isEmpty(instance['attribute']),
+    })
+
+    if(TypeChecker.isEmpty(instance['attribute'])){
+      return '';
+    }
+
+    return JSON.stringify(instance[attribute]);
+  }
+
+  /**
    * Identify if attribute is a special case
    * that need to be formatted
    *
@@ -195,6 +219,10 @@ export default class EntitySerializeJSON {
       constructor_name : constructor_name,
       formatted        : formatted,
     })
+
+    if(!formatted){
+      return data_object;
+    }
 
     data_object[attribute] = formatted;
 

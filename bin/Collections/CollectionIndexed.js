@@ -81,6 +81,7 @@ var CollectionIndexed = exports["default"] = /*#__PURE__*/function (_Collection)
      * Add an item to the collection or
      * update if it already exists
      *
+     * @override
      * @public
      * @since 1.0.0
      * @param {Object} item
@@ -94,15 +95,14 @@ var CollectionIndexed = exports["default"] = /*#__PURE__*/function (_Collection)
       if (!item[this._index_id]) {
         return false;
       }
-      if (this.indexes[item[this._index_id]]) {
-        return this.update(item, at_beginning);
-      }
-      return this.set(item, at_beginning);
+      var id = item[this._index_id];
+      return _get(_getPrototypeOf(CollectionIndexed.prototype), "add", this).call(this, id, item, at_beginning);
     }
 
     /**
      * Update an item in the collection
      *
+     * @override
      * @public
      * @since 1.0.0
      * @param {Object} item
@@ -113,11 +113,67 @@ var CollectionIndexed = exports["default"] = /*#__PURE__*/function (_Collection)
     key: "update",
     value: function update(item) {
       var at_beginning = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      if (!this.indexes[item[this._index_id]]) {
+      if (!item[this._index_id]) {
         return false;
       }
-      _get(_getPrototypeOf(CollectionIndexed.prototype), "delete", this).call(this, item[this._index_id]);
-      return this.set(item, at_beginning);
+      var id = item[this._index_id];
+      return _get(_getPrototypeOf(CollectionIndexed.prototype), "update", this).call(this, id, item, at_beginning);
+    }
+
+    /**
+     * Toogle item in the collection
+     *
+     * @override
+     * @since 1.2.0
+     * @param {String|Number} key
+     * @param {*} value
+     * @param {Boolean} at_beginning
+     * @returns {Boolean}
+     */
+  }, {
+    key: "toogle",
+    value: function toogle(item) {
+      var at_beginning = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      if (!item[this._index_id]) {
+        return false;
+      }
+      var id = item[this._index_id];
+      return _get(_getPrototypeOf(CollectionIndexed.prototype), "toogle", this).call(this, id, item, at_beginning);
+    }
+
+    /**
+     * Join items from the collection based on a key and separator
+     *
+     * @public
+     * @since 1.2.0
+     * @param {String|Number} index_key
+     * @returns {Object}
+     */
+  }, {
+    key: "join",
+    value: function join() {
+      var index_key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._index_id;
+      var separator = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ',';
+      return this.items.map(function (item) {
+        return item[index_key];
+      }).join(separator);
+    }
+
+    /**
+     * Get the sum of all items in the collection
+     *
+     * @public
+     * @since 1.2.0
+     * @param {String|Number} index_key
+     * @returns {Number}
+     */
+  }, {
+    key: "sum",
+    value: function sum() {
+      var index_key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._index_id;
+      return this.items.reduce(function (sum, item) {
+        return sum + parseFloat(item[index_key]);
+      }, 0);
     }
 
     /**
@@ -178,6 +234,43 @@ var CollectionIndexed = exports["default"] = /*#__PURE__*/function (_Collection)
       var collection = new CollectionIndexed(this._index_id);
       collection.setFromArray(items);
       return collection;
+    }
+
+    /**
+     * Group by items from the collection based on a key
+     *
+     * @public
+     * @since 1.2.0
+     * @param {String|number} index_key
+     * @returns {Object|Array}
+     */
+  }, {
+    key: "groupBy",
+    value: function groupBy() {
+      var index_key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._index_id;
+      return this.items.reduce(function (accumulator, item) {
+        var key = item[index_key];
+        if (!accumulator[key]) {
+          accumulator[key] = [];
+        }
+        accumulator[key].push(item);
+        return accumulator;
+      }, {});
+    }
+
+    /**
+     * Count items from the collection based on a key
+     *
+     * @public
+     * @since 1.2.0
+     * @returns {Number}
+     */
+  }, {
+    key: "count",
+    value: function count() {
+      return this.items.reduce(function (accumulator, item) {
+        return accumulator + 1;
+      }, 0);
     }
 
     /**

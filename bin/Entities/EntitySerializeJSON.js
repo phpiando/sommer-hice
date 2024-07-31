@@ -70,6 +70,9 @@ var EntitySerializeJSON = exports["default"] = /*#__PURE__*/function () {
       },
       'Array': function Array(attribute, instance) {
         return _this.serializeArray(attribute, instance);
+      },
+      'Object': function Object(attribute, instance) {
+        return _this.serializeObject(attribute, instance);
       }
     });
     if (!(entity instanceof _Entity["default"])) {
@@ -159,6 +162,29 @@ var EntitySerializeJSON = exports["default"] = /*#__PURE__*/function () {
     }
 
     /**
+     * Serialize objects in JSON format
+     *
+     * @public
+     * @since 1.2.0
+     * @param {*} attribute
+     * @param {*} instance
+     * @returns
+     */
+  }, {
+    key: "serializeObject",
+    value: function serializeObject(attribute, instance) {
+      this._log('*** Object:', {
+        attribute: attribute,
+        instance: instance,
+        is_empty: _TypeChecker["default"].isEmpty(instance['attribute'])
+      });
+      if (_TypeChecker["default"].isEmpty(instance['attribute'])) {
+        return '';
+      }
+      return JSON.stringify(instance[attribute]);
+    }
+
+    /**
      * Identify if attribute is a special case
      * that need to be formatted
      *
@@ -209,6 +235,9 @@ var EntitySerializeJSON = exports["default"] = /*#__PURE__*/function () {
         constructor_name: constructor_name,
         formatted: formatted
       });
+      if (!formatted) {
+        return data_object;
+      }
       data_object[attribute] = formatted;
       return data_object;
     }
