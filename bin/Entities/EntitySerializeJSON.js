@@ -178,9 +178,11 @@ var EntitySerializeJSON = exports["default"] = /*#__PURE__*/function () {
         instance: instance,
         is_empty: _TypeChecker["default"].isEmpty(instance['attribute'])
       });
-      if (_TypeChecker["default"].isEmpty(instance['attribute'])) {
-        return '';
-      }
+
+      // if(TypeChecker.isEmpty(instance['attribute']) === true){
+      //   return '';
+      // }
+
       return JSON.stringify(instance[attribute]);
     }
 

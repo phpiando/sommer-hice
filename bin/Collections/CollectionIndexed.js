@@ -188,7 +188,7 @@ var CollectionIndexed = exports["default"] = /*#__PURE__*/function (_Collection)
     key: "whereEqual",
     value: function whereEqual(key, value) {
       var new_items = this.filter(function (item) {
-        return item[key] === value;
+        return item[key] == value;
       });
       return this.newCollection(new_items);
     }
@@ -205,7 +205,7 @@ var CollectionIndexed = exports["default"] = /*#__PURE__*/function (_Collection)
     key: "whereNotEqual",
     value: function whereNotEqual(key, value) {
       var new_items = this.filter(function (item) {
-        return item[key] !== value;
+        return item[key] != value;
       });
       return this.newCollection(new_items);
     }

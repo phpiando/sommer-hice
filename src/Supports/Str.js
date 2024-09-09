@@ -87,4 +87,27 @@ export default class Str {
   static ucfirst(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
   }  
+
+  /**
+   * Get the first part of a string
+   *
+   * @param {String} value
+   * @param {Number} length
+   * @returns {String}
+   */
+  static first(value, length = 1) {
+    return String(value).substring(0, length);
+  }
+
+  /**
+   * Normalize string to remove accents
+   *
+   * @param {String} str
+   * @returns {String}
+   */
+  static normalizeString(str){
+    return str
+      .normalize('NFD') // words with accents are separated in two parts
+      .replace(/[\u0300-\u036f]/g, '');
+  };
 }

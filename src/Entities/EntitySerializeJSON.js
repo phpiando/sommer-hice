@@ -158,11 +158,11 @@ export default class EntitySerializeJSON {
       attribute : attribute,
       instance  : instance,
       is_empty: TypeChecker.isEmpty(instance['attribute']),
-    })
+    });
 
-    if(TypeChecker.isEmpty(instance['attribute'])){
-      return '';
-    }
+    // if(TypeChecker.isEmpty(instance['attribute']) === true){
+    //   return '';
+    // }
 
     return JSON.stringify(instance[attribute]);
   }

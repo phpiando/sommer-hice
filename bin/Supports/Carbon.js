@@ -284,6 +284,26 @@ var Carbon = exports["default"] = /*#__PURE__*/function () {
     }
 
     /**
+     * Get the name short of the day
+     *
+     * @public
+     * @since 1.0.0
+     * @param {String} language
+     * @returns {String} Name of the day
+     */
+  }, {
+    key: "dayShortName",
+    value: function dayShortName() {
+      var language = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en';
+      var formatter = new Intl.DateTimeFormat(language, {
+        weekday: 'short'
+      });
+      //return just seg. ter. qua. qui
+
+      return _Str["default"].first(formatter.format(this._date), 3) + '.';
+    }
+
+    /**
      * Get the full name of the month from the date
      * @public
      * @since 1.0.0
@@ -431,6 +451,21 @@ var Carbon = exports["default"] = /*#__PURE__*/function () {
       var diffMilliseconds = past - now;
       var diffDays = Math.round(diffMilliseconds / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
       return diffDays;
+    }
+
+    /**
+     * Get diff in years
+     *
+     * @public
+     * @since 1.3.0
+     * @returns {Number} diff in years
+     */
+  }, {
+    key: "diffYears",
+    value: function diffYears() {
+      var now = new Date();
+      var diff = now.getFullYear() - this._date.getFullYear();
+      return diff;
     }
 
     /**

@@ -98,6 +98,33 @@ var Str = exports["default"] = /*#__PURE__*/function () {
     value: function ucfirst(value) {
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
+
+    /**
+     * Get the first part of a string
+     *
+     * @param {String} value
+     * @param {Number} length
+     * @returns {String}
+     */
+  }, {
+    key: "first",
+    value: function first(value) {
+      var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      return String(value).substring(0, length);
+    }
+
+    /**
+     * Normalize string to remove accents
+     *
+     * @param {String} str
+     * @returns {String}
+     */
+  }, {
+    key: "normalizeString",
+    value: function normalizeString(str) {
+      return str.normalize('NFD') // Decompõe os caracteres acentuados
+      .replace(/[\u0300-\u036f]/g, '');
+    }
   }]);
 }();
 /**

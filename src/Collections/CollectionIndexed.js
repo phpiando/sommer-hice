@@ -137,7 +137,7 @@ export default class CollectionIndexed extends Collection {
    * @returns
    */
   whereEqual(key, value) {
-    const new_items = this.filter(item => item[key] === value);
+    const new_items = this.filter(item => item[key] == value);
     return this.newCollection(new_items);
   }
 
@@ -150,7 +150,7 @@ export default class CollectionIndexed extends Collection {
    * @returns
    */
   whereNotEqual(key, value) {
-    const new_items = this.filter(item => item[key] !== value);
+    const new_items = this.filter(item => item[key] != value);
     return this.newCollection(new_items);
   }
 

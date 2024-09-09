@@ -250,6 +250,21 @@ export default class Carbon {
   }
 
   /**
+   * Get the name short of the day
+   *
+   * @public
+   * @since 1.0.0
+   * @param {String} language
+   * @returns {String} Name of the day
+   */
+  dayShortName(language = 'en'){
+    const formatter = new Intl.DateTimeFormat(language, { weekday: 'short' });
+    //return just seg. ter. qua. qui
+
+    return Str.first(formatter.format(this._date), 3)+'.';
+  }
+
+  /**
    * Get the full name of the month from the date
    * @public
    * @since 1.0.0
@@ -378,6 +393,18 @@ export default class Carbon {
     return diffDays;
   }
 
+  /**
+   * Get diff in years
+   *
+   * @public
+   * @since 1.3.0
+   * @returns {Number} diff in years
+   */
+  diffYears() {
+    const now = new Date();
+    const diff = now.getFullYear() - this._date.getFullYear();
+    return diff;
+  }
 
   /**
    * Format a date to human readable
