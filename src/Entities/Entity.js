@@ -25,6 +25,9 @@ import Validator                  from "../Validation/Validator";
  *    static FORMAT_DATES = {
  *     'created_at': 'YYYY-MM-DD',
  *    }
+ *    static MESSAGES = {
+ *     'name': 'The name field is required',
+ *    }
  *    attribute = null;
  *
  *    hasOne = {
@@ -77,6 +80,7 @@ export default class Entity {
   setRulesValidator(){
     const rules = this.constructor.RULES || {};
     this._validator = new Validator(rules);
+    this._validator.setMessages(this.constructor.MESSAGES || {});
   }
 
   /**

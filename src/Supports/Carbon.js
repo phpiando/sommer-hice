@@ -355,6 +355,11 @@ export default class Carbon {
       date = date.replace('Z', '');
     }
 
+    if (typeof date === 'string' && date.match(/^\d{4}-\d{2}-\d{2}$/) && this._options['ignore_timezone']) {
+      const [year, month, day] = date.split('-').map(Number);
+      return new Date(Date.UTC(year, month - 1, day));
+    }
+
     if(date instanceof Date){
       return date;
     }

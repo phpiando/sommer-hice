@@ -203,6 +203,18 @@ export default class Validator {
   }
 
   /**
+   * Set the messages to be returned
+   *
+   * @public
+   * @since 1.3.1
+   * @param {Object} messages
+   * @returns {void}
+   */
+  setMessages(messages){
+    this._messages = messages;
+  }
+
+  /**
    * set attribute valitated
    *
    * @public

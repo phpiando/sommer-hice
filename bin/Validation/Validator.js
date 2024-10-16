@@ -345,6 +345,20 @@ var Validator = exports["default"] = /*#__PURE__*/function () {
     }
 
     /**
+     * Set the messages to be returned
+     *
+     * @public
+     * @since 1.3.1
+     * @param {Object} messages
+     * @returns {void}
+     */
+  }, {
+    key: "setMessages",
+    value: function setMessages(messages) {
+      this._messages = messages;
+    }
+
+    /**
      * set attribute valitated
      *
      * @public

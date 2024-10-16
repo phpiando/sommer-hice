@@ -122,7 +122,7 @@ var Str = exports["default"] = /*#__PURE__*/function () {
   }, {
     key: "normalizeString",
     value: function normalizeString(str) {
-      return str.normalize('NFD') // Decompõe os caracteres acentuados
+      return str.normalize('NFD') // words with accents are separated in two parts
       .replace(/[\u0300-\u036f]/g, '');
     }
   }]);

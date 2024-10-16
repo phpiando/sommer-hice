@@ -238,20 +238,12 @@ export default class Collection {
    * Chunk Items of Array
    *
    * @public
-   * @since 1.0.0
+   * @since 1.3.1
    * @param {Number} size
    * @returns {Array}
    */
   chunk(size) {
-    const chunks = [];
-    let index = 0;
-
-    while (index < this.items.length) {
-      chunks.push(this.items.slice(index, index + size));
-      index += size;
-    }
-
-    return chunks;
+    return this.items.slice(0, size);
   }
 
   /**

@@ -39,6 +39,9 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
  *    static FORMAT_DATES = {
  *     'created_at': 'YYYY-MM-DD',
  *    }
+ *    static MESSAGES = {
+ *     'name': 'The name field is required',
+ *    }
  *    attribute = null;
  *
  *    hasOne = {
@@ -92,6 +95,7 @@ var Entity = exports["default"] = /*#__PURE__*/function () {
     value: function setRulesValidator() {
       var rules = this.constructor.RULES || {};
       this._validator = new _Validator["default"](rules);
+      this._validator.setMessages(this.constructor.MESSAGES || {});
     }
 
     /**

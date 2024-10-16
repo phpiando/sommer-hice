@@ -227,12 +227,16 @@ export default class CollectionIndexed extends Collection {
    * @since 1.0.0
    * @returns {Array}
    */
-  getIndexKeys() {
+  getIndexKeys(column = null) {
     if(this.size === 0){
       return [];
     }
 
-    return Object.keys(this.indexes);
+    if(!column){
+      return Object.keys(this.indexes);
+    }
+
+    return this.items.map(item => item[column]);
   }
 
   /**

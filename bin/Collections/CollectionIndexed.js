@@ -321,10 +321,16 @@ var CollectionIndexed = exports["default"] = /*#__PURE__*/function (_Collection)
   }, {
     key: "getIndexKeys",
     value: function getIndexKeys() {
+      var column = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       if (this.size === 0) {
         return [];
       }
-      return Object.keys(this.indexes);
+      if (!column) {
+        return Object.keys(this.indexes);
+      }
+      return this.items.map(function (item) {
+        return item[column];
+      });
     }
 
     /**

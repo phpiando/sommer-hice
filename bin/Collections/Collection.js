@@ -269,20 +269,14 @@ var Collection = exports["default"] = /*#__PURE__*/function () {
      * Chunk Items of Array
      *
      * @public
-     * @since 1.0.0
+     * @since 1.3.1
      * @param {Number} size
      * @returns {Array}
      */
   }, {
     key: "chunk",
     value: function chunk(size) {
-      var chunks = [];
-      var index = 0;
-      while (index < this.items.length) {
-        chunks.push(this.items.slice(index, index + size));
-        index += size;
-      }
-      return chunks;
+      return this.items.slice(0, size);
     }
 
     /**
