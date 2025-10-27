@@ -89,6 +89,50 @@ export default class Carbon {
   }
 
   /**
+   * Get the first day of the month
+   * @public
+   * @since 1.4.1
+   * @returns {Carbon}
+   */
+  setFirstDayOfMonth() {
+    let first_day = new Carbon(new Date(this._date.getFullYear(), this._date.getMonth(), 1));
+    return first_day;
+  }
+
+  /**
+   * Get the last day of the month
+   * @public
+   * @since 1.4.1
+   * @returns {Carbon}
+   */
+  setLastDayOfMonth() {
+    let last_day = new Carbon(new Date(this._date.getFullYear(), this._date.getMonth() + 1, 0));
+    return last_day;
+  }
+
+  /**
+   * Get the first day of the month
+   * @public
+   * @since 1.4.1
+   * @param {*} format
+   * @returns {String}
+   */
+  getFirstDayOfMonth(format = null) {
+    return this.setFirstDayOfMonth().format(format);
+  }
+
+  /**
+   * Get the last day of the month
+   * @public
+   * @since 1.4.1
+   * @param {*} format
+   * @returns {String}
+   */
+  getLastDayOfMonth(format = null) {
+    return this.setLastDayOfMonth().format(format);
+  }
+
+  /**
    * Add years in a date
    * @public
    * @since 1.0.0

@@ -4,6 +4,7 @@ export { default as Entity } from './Entities/Entity.js';
 export { default as BroadcastEvent } from './Events/BroadcastEvent.js';
 export { default as HTTPRequest } from './HTTP/HTTPRequest.js';
 export { default as HTTPResponse } from './HTTP/Entities/HTTPResponse.js';
+export { deafult as HTTPRequestException } from './HTTP/Exceptions/HTTPRequestException.js';
 export { default as StateBase } from './States/StateBase.js';
 export { default as StateHTTP } from './States/StateHTTP.js';
 export { default as StorageLocal } from './Storage/StorageLocal.js';
