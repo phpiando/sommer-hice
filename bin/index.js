@@ -51,6 +51,12 @@ Object.defineProperty(exports, "HTTPRequest", {
     return _HTTPRequest["default"];
   }
 });
+Object.defineProperty(exports, "HTTPRequestException", {
+  enumerable: true,
+  get: function get() {
+    return _HTTPRequestException.deafult;
+  }
+});
 Object.defineProperty(exports, "HTTPResponse", {
   enumerable: true,
   get: function get() {
@@ -99,6 +105,7 @@ var _Entity = _interopRequireDefault(require("./Entities/Entity.js"));
 var _BroadcastEvent = _interopRequireDefault(require("./Events/BroadcastEvent.js"));
 var _HTTPRequest = _interopRequireDefault(require("./HTTP/HTTPRequest.js"));
 var _HTTPResponse = _interopRequireDefault(require("./HTTP/Entities/HTTPResponse.js"));
+var _HTTPRequestException = require("./HTTP/Exceptions/HTTPRequestException.js");
 var _StateBase = _interopRequireDefault(require("./States/StateBase.js"));
 var _StateHTTP = _interopRequireDefault(require("./States/StateHTTP.js"));
 var _StorageLocal = _interopRequireDefault(require("./Storage/StorageLocal.js"));

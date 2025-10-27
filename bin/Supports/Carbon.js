@@ -99,8 +99,60 @@ var Carbon = exports["default"] = /*#__PURE__*/function () {
    * @returns {Carbon}
    */
   return _createClass(Carbon, [{
-    key: "addYears",
+    key: "setFirstDayOfMonth",
     value:
+    /**
+     * Get the first day of the month
+     * @public
+     * @since 1.4.1
+     * @returns {Carbon}
+     */
+    function setFirstDayOfMonth() {
+      var first_day = new Carbon(new Date(this._date.getFullYear(), this._date.getMonth(), 1));
+      return first_day;
+    }
+
+    /**
+     * Get the last day of the month
+     * @public
+     * @since 1.4.1
+     * @returns {Carbon}
+     */
+  }, {
+    key: "setLastDayOfMonth",
+    value: function setLastDayOfMonth() {
+      var last_day = new Carbon(new Date(this._date.getFullYear(), this._date.getMonth() + 1, 0));
+      return last_day;
+    }
+
+    /**
+     * Get the first day of the month
+     * @public
+     * @since 1.4.1
+     * @param {*} format
+     * @returns {String}
+     */
+  }, {
+    key: "getFirstDayOfMonth",
+    value: function getFirstDayOfMonth() {
+      var format = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      return this.setFirstDayOfMonth().format(format);
+    }
+
+    /**
+     * Get the last day of the month
+     * @public
+     * @since 1.4.1
+     * @param {*} format
+     * @returns {String}
+     */
+  }, {
+    key: "getLastDayOfMonth",
+    value: function getLastDayOfMonth() {
+      var format = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      return this.setLastDayOfMonth().format(format);
+    }
+
     /**
      * Add years in a date
      * @public
@@ -108,7 +160,9 @@ var Carbon = exports["default"] = /*#__PURE__*/function () {
      * @param {Number} years
      * @returns {Carbon}
      */
-    function addYears(years) {
+  }, {
+    key: "addYears",
+    value: function addYears(years) {
       this._date.setFullYear(this._date.getFullYear() + years);
       return this;
     }
