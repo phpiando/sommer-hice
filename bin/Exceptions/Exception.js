@@ -56,4 +56,4 @@ var Exception = exports["default"] = /*#__PURE__*/function (_Error) {
   }
   _inherits(Exception, _Error);
   return _createClass(Exception);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}(/*#__PURE__*/_wrapNativeSuper(Error));

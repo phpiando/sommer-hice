@@ -87,9 +87,9 @@ var Carbon = exports["default"] = /*#__PURE__*/function () {
     _defineProperty(this, "_options", {
       ignore_timezone: Carbon.IGNORE_TIMEZONE
     });
+    this.setOptions(options);
     this.setDate(date);
     this.setFormatDefault(format);
-    this.setOptions(options);
   }
 
   /**
@@ -467,25 +467,39 @@ var Carbon = exports["default"] = /*#__PURE__*/function () {
   }, {
     key: "_parseDate",
     value: function _parseDate(date) {
-      // Handle ISO 8601 date strings ending with 'Z' (UTC)
-      if (typeof date === 'string' && date.endsWith('Z') && this._options['ignore_timezone']) {
-        date = date.replace('Z', '');
-      }
-      if (typeof date === 'string' && date.match(/^\d{4}-\d{2}-\d{2}$/) && this._options['ignore_timezone']) {
-        var _date$split$map = date.split('-').map(Number),
-          _date$split$map2 = _slicedToArray(_date$split$map, 3),
-          year = _date$split$map2[0],
-          month = _date$split$map2[1],
-          day = _date$split$map2[2];
-        return new Date(Date.UTC(year, month - 1, day));
+      if (date instanceof Carbon) {
+        date = date.format();
       }
       if (date instanceof Date) {
         return date;
       }
-      if (date instanceof Carbon) {
-        date = date.format();
+      if (typeof date === 'string' && this._options['ignore_timezone']) {
+        // Date only: "2026-06-16"
+        var dateOnly = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (dateOnly) {
+          var _dateOnly$map = dateOnly.map(Number),
+            _dateOnly$map2 = _slicedToArray(_dateOnly$map, 4),
+            year = _dateOnly$map2[1],
+            month = _dateOnly$map2[2],
+            day = _dateOnly$map2[3];
+          return new Date(year, month - 1, day);
+        }
+
+        // Datetime: "2025-09-26T11:13:52.000000Z", "2025-09-26T11:13:52", "2025-09-26 11:13:52"
+        var dateTime = date.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})/);
+        if (dateTime) {
+          var _dateTime$map = dateTime.map(Number),
+            _dateTime$map2 = _slicedToArray(_dateTime$map, 7),
+            _year = _dateTime$map2[1],
+            _month = _dateTime$map2[2],
+            _day = _dateTime$map2[3],
+            hours = _dateTime$map2[4],
+            minutes = _dateTime$map2[5],
+            seconds = _dateTime$map2[6];
+          return new Date(_year, _month - 1, _day, hours, minutes, seconds);
+        }
       }
-      return date = new Date(date);
+      return new Date(date);
     }
 
     /**

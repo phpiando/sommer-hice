@@ -73,9 +73,9 @@ export default class Carbon {
    * @param {String|Date} date
    */
   constructor(date, format = Carbon.FORMAT_DEFAULT, options = {}) {
+    this.setOptions(options);
     this.setDate(date);
     this.setFormatDefault(format);
-    this.setOptions(options);
   }
 
   /**
@@ -394,25 +394,31 @@ export default class Carbon {
    * @returns {Carbon}
    */
   _parseDate(date) {
-    // Handle ISO 8601 date strings ending with 'Z' (UTC)
-    if (typeof date === 'string' && date.endsWith('Z') && this._options['ignore_timezone']) {
-      date = date.replace('Z', '');
-    }
-
-    if (typeof date === 'string' && date.match(/^\d{4}-\d{2}-\d{2}$/) && this._options['ignore_timezone']) {
-      const [year, month, day] = date.split('-').map(Number);
-      return new Date(Date.UTC(year, month - 1, day));
-    }
-
-    if(date instanceof Date){
-      return date;
-    }
-
-    if(date instanceof Carbon) {
+    if (date instanceof Carbon) {
       date = date.format();
     }
 
-    return date = new Date(date);
+    if (date instanceof Date) {
+      return date;
+    }
+
+    if (typeof date === 'string' && this._options['ignore_timezone']) {
+      // Date only: "2026-06-16"
+      const dateOnly = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (dateOnly) {
+        const [, year, month, day] = dateOnly.map(Number);
+        return new Date(year, month - 1, day);
+      }
+
+      // Datetime: "2025-09-26T11:13:52.000000Z", "2025-09-26T11:13:52", "2025-09-26 11:13:52"
+      const dateTime = date.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})/);
+      if (dateTime) {
+        const [, year, month, day, hours, minutes, seconds] = dateTime.map(Number);
+        return new Date(year, month - 1, day, hours, minutes, seconds);
+      }
+    }
+
+    return new Date(date);
   }
 
   /**
